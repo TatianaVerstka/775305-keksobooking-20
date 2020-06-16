@@ -156,10 +156,6 @@ var shuffleArray = function (array) {
   return newArray;
 }
 
-var getRandomNumberInRange = function (min, max) {
-  return Math.floor(Math.random() * (max - min) + min);
-}
-
 function cloneElements(templateSelector, elementSelector) {
   return document.querySelector(templateSelector).content.querySelector(elementSelector).cloneNode(true);
 }
