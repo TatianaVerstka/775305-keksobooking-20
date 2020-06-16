@@ -9,7 +9,7 @@ var TITLES = [
   "Квартира-6",
   "Квартира-7",
   "Квартира-8"
-]
+];
 
 var PRICES = [
   8000,
@@ -20,14 +20,14 @@ var PRICES = [
   9000,
   2500,
   9500
-]
+];
 
 var TYPES = [
   'palace',
   'flat',
   'house',
   'bungalo'
-]
+];
 
 var ROOMS = [
   1,
@@ -42,19 +42,19 @@ var QUESTS = [
   3,
   4,
   5
-]
+];
 
 var CHECKIN = [
   '12:00',
   '13:00',
   '14:00'
-]
+];
 
 var CHECKOUT = [
   '12:00',
   '13:00',
   '14:00'
-]
+];
 
 var FEATURES = [
   'wifi',
@@ -63,7 +63,7 @@ var FEATURES = [
   'washer',
   'elevator',
   'conditioner'
-]
+];
 
 var DESCRIPTION = [
   'Описание-1',
@@ -74,13 +74,13 @@ var DESCRIPTION = [
   'Описание-6',
   'Описание-7',
   'Описание-8',
-]
+];
 
 var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
-]
+];
 
 var DATA_COUNT = 8;
 var LOCATION_X_MIN = 0;
@@ -91,35 +91,35 @@ var LOCATION_Y_MAX = 630;
 var mapDialog = function () {
   var map = document.querySelector('.map');
   map.classList.remove('map--faded');
-}
+};
 
 var author = function (index) {
   this.avatar = 'img/avatars/user0' + index + '.png';
-}
+};
 
 var getPins = function (number) {
   return new Array(number).fill('').map(function (element, index) {
     return new pin(index + 1);
   });
-}
+};
 
 var pin = function (number) {
   this.author = new author(number);
   this.location = new PinPosition();
   this.offer = new offer(this.location);
-}
+};
 
 function getRandomValue(array) {
   return array[Math.floor(Math.random() * array.length)];
-}
+};
 
 function getArrayWithRandomLength(array) {
   return shuffleArray(array).slice(0, getRandomValue(array.length));
-}
+};
 
 function getRandomNumberInRange(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
-}
+};
 
 var offer = function (location) {
   this.title = getRandomValue(TITLES);
@@ -134,7 +134,7 @@ var offer = function (location) {
   this.features = getArrayWithRandomLength(FEATURES);
   this.description = getRandomValue(DESCRIPTION);
   this.photos = getArrayWithRandomLength(PHOTOS);
-}
+};
 
 var PinPosition = function () {
   var pinsWrapper = document.querySelector('.map__pins');
@@ -143,7 +143,7 @@ var PinPosition = function () {
   LOCATION_X_MAX = pinsWrapper.offsetWidth - (pin.offsetWidth / 2);
   this.x = getRandomNumberInRange(LOCATION_X_MIN, LOCATION_X_MAX);
   this.y = getRandomNumberInRange(LOCATION_Y_MIN, LOCATION_Y_MAX);
-}
+};
 
 var shuffleArray = function (array) {
   var newArray = array.slice();
@@ -154,11 +154,11 @@ var shuffleArray = function (array) {
     newArray[j] = temp;
   }
   return newArray;
-}
+};
 
 function cloneElements(templateSelector, elementSelector) {
   return document.querySelector(templateSelector).content.querySelector(elementSelector).cloneNode(true);
-}
+};
 
 function renderPin(props) {
   var pinElement = cloneElements('#pin', '.map__pin');
@@ -168,7 +168,7 @@ function renderPin(props) {
   pinElement.querySelector('img').src = props.author.avatar;
   pinElement.querySelector('img').alt = props.offer.title;
   return pinElement;
-}
+};
 
 
 function renderPins(pins) {
@@ -178,7 +178,7 @@ function renderPins(pins) {
     docFragment.appendChild(renderPin(element));
   });
   mapPinsElement.appendChild(docFragment);
-}
+};
 
 var PINS = getPins(DATA_COUNT);
 renderPins(PINS);
