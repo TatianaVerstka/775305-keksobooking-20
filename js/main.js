@@ -103,25 +103,25 @@ var getPins = function (number) {
   });
 };
 
-function pin (number) {
+function pin(number) {
   this.author = new author(number);
   this.location = new pinPosition();
   this.offer = new offer(this.location);
-};
+}
 
 function getRandomValue(array) {
   return array[Math.floor(Math.random() * array.length)];
-};
+}
 
 function getArrayWithRandomLength(array) {
   return shuffleArray(array).slice(0, getRandomValue(array.length));
-};
+}
 
 function getRandomNumberInRange(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
-};
+}
 
-function offer (location) {
+function offer(location) {
   this.title = getRandomValue(TITLES);
   this.address = location.x + ', ' + location.y;
   this.price = getRandomValue(PRICES);
@@ -134,16 +134,16 @@ function offer (location) {
   this.features = getArrayWithRandomLength(FEATURES);
   this.description = getRandomValue(DESCRIPTION);
   this.photos = getArrayWithRandomLength(PHOTOS);
-};
+}
 
-function pinPosition () {
+function pinPosition() {
   var pinsWrapper = document.querySelector('.map__pins');
   var pin = document.querySelector('.map__pin');
   LOCATION_X_MIN = pin.offsetWidth / 2;
   LOCATION_X_MAX = pinsWrapper.offsetWidth - (pin.offsetWidth / 2);
   this.x = getRandomNumberInRange(LOCATION_X_MIN, LOCATION_X_MAX);
   this.y = getRandomNumberInRange(LOCATION_Y_MIN, LOCATION_Y_MAX);
-};
+}
 
 var shuffleArray = function (array) {
   var newArray = array.slice();
@@ -158,7 +158,7 @@ var shuffleArray = function (array) {
 
 function cloneElements(templateSelector, elementSelector) {
   return document.querySelector(templateSelector).content.querySelector(elementSelector).cloneNode(true);
-};
+}
 
 function renderPin(props) {
   var pinElement = cloneElements('#pin', '.map__pin');
@@ -168,7 +168,7 @@ function renderPin(props) {
   pinElement.querySelector('img').src = props.author.avatar;
   pinElement.querySelector('img').alt = props.offer.title;
   return pinElement;
-};
+}
 
 
 function renderPins(pins) {
@@ -178,7 +178,7 @@ function renderPins(pins) {
     docFragment.appendChild(renderPin(element));
   });
   mapPinsElement.appendChild(docFragment);
-};
+}
 
 var PINS = getPins(DATA_COUNT);
 renderPins(PINS);
