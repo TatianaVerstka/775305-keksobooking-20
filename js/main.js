@@ -93,20 +93,20 @@ var mapDialog = function () {
   map.classList.remove('map--faded');
 };
 
-var author = function (index) {
+var Author = function (index) {
   this.avatar = 'img/avatars/user0' + index + '.png';
 };
 
 var getPins = function (number) {
   return new Array(number).fill('').map(function (element, index) {
-    return new pin(index + 1);
+    return new Pin(index + 1);
   });
 };
 
-function pin(number) {
-  this.author = new author(number);
-  this.location = new pinPosition();
-  this.offer = new offer(this.location);
+function Pin(number) {
+  this.author = new Author(number);
+  this.location = new PinPosition();
+  this.offer = new Offer(this.location);
 }
 
 function getRandomValue(array) {
@@ -121,7 +121,7 @@ function getRandomNumberInRange(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-function offer(location) {
+function Offer(location) {
   this.title = getRandomValue(TITLES);
   this.address = location.x + ', ' + location.y;
   this.price = getRandomValue(PRICES);
@@ -136,11 +136,11 @@ function offer(location) {
   this.photos = getArrayWithRandomLength(PHOTOS);
 }
 
-function pinPosition() {
+function PinPosition() {
   var pinsWrapper = document.querySelector('.map__pins');
-  var pin = document.querySelector('.map__pin');
-  LOCATION_X_MIN = pin.offsetWidth / 2;
-  LOCATION_X_MAX = pinsWrapper.offsetWidth - (pin.offsetWidth / 2);
+  var mapPin = document.querySelector('.map__pin');
+  LOCATION_X_MIN = mapPin.offsetWidth / 2;
+  LOCATION_X_MAX = pinsWrapper.offsetWidth - (mapPin.offsetWidth / 2);
   this.x = getRandomNumberInRange(LOCATION_X_MIN, LOCATION_X_MAX);
   this.y = getRandomNumberInRange(LOCATION_Y_MIN, LOCATION_Y_MAX);
 }
