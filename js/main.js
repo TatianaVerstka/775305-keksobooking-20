@@ -1,14 +1,14 @@
 'use strict';
 
 var TITLES = [
-  "Квартира-1",
-  "Квартира-2",
-  "Квартира-3",
-  "Квартира-4",
-  "Квартира-5",
-  "Квартира-6",
-  "Квартира-7",
-  "Квартира-8"
+  'Квартира-1',
+  'Квартира-2',
+  'Квартира-3',
+  'Квартира-4',
+  'Квартира-5',
+  'Квартира-6',
+  'Квартира-7',
+  'Квартира-8'
 ];
 
 var PRICES = [
@@ -34,7 +34,7 @@ var ROOMS = [
   2,
   3,
   4
-]
+];
 
 var QUESTS = [
   1,
@@ -103,9 +103,9 @@ var getPins = function (number) {
   });
 };
 
-var pin = function (number) {
+function pin (number) {
   this.author = new author(number);
-  this.location = new PinPosition();
+  this.location = new pinPosition();
   this.offer = new offer(this.location);
 };
 
@@ -121,7 +121,7 @@ function getRandomNumberInRange(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
-var offer = function (location) {
+function offer (location) {
   this.title = getRandomValue(TITLES);
   this.address = location.x + ', ' + location.y;
   this.price = getRandomValue(PRICES);
@@ -136,7 +136,7 @@ var offer = function (location) {
   this.photos = getArrayWithRandomLength(PHOTOS);
 };
 
-var PinPosition = function () {
+function pinPosition () {
   var pinsWrapper = document.querySelector('.map__pins');
   var pin = document.querySelector('.map__pin');
   LOCATION_X_MIN = pin.offsetWidth / 2;
