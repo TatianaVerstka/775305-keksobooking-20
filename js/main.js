@@ -88,10 +88,179 @@ var LOCATION_X_MAX = 0;
 var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
 
-var mapDialog = function () {
-  var map = document.querySelector('.map');
+var map = document.querySelector('.map');
+var pin = document.querySelector('.map__pin');
+var mainPin = document.querySelector('.map__pin--main');
+var formPage = document.querySelector('.ad-form');
+var inputFormPage = formPage.querySelectorAll('fieldset');
+var inputType = document.querySelector('#type');
+var inputPrice = document.querySelector('#price');
+var inputRooms = document.querySelector('#room_number');
+var inputCapacity = document.querySelector('#capacity');
+var inputAddress = document.querySelector('#address');
+var inputTimeIn = document.querySelector('#timein');
+var inputTimeOut = document.querySelector('#timeout');
+var btnSend = formPage.querySelector('.ad-form__submit');
+var btnReset = document.querySelector('.ad-form__reset');
+
+var minValuePriceFlat = '1000';
+var minValuePriceHouse = '5000';
+var minValuePricePalace = '10000';
+
+function defaultValueInput() {
+  inputPrice.placeholder = minValuePriceFlat;
+  inputCapacity.value = '1';
+}
+
+function addPriceAttribute(type) {
+  inputPrice.setAttribute('min', type);
+}
+
+function inputDisabled(type) {
+  for (var input of inputFormPage) {
+    input.disabled = type;
+  }
+}
+
+function inactiveState() {
+  inputDisabled(true);
+  inputAddress.value = Math.round(parseFloat(mainPin.style.left) + (65 / 2)) + ', ' + Math.round((parseFloat(mainPin.style.top) + (65 / 2)));
+}
+
+function activeState() {
   map.classList.remove('map--faded');
-};
+  formPage.classList.remove('ad-form--disabled');
+  inputDisabled(false);
+
+  renderPins(PINS);
+
+  if (mainPin) {
+    inputAddress.value = Math.round(parseFloat(mainPin.style.left) + (65 / 2)) + ', ' + Math.round((parseFloat(mainPin.style.top) + (65 / 2 + 22)));
+  } else {
+    inputAddress.value = Math.round(parseFloat(mainPin.style.left) + (50 / 2)) + ', ' + Math.round((parseFloat(mainPin.style.top) + 70));
+  }
+}
+
+function changeValueRooms() {
+  if (inputRooms.value === '1') {
+    inputCapacity.value = '1';
+  } else if (inputRooms.value === '2') {
+    inputCapacity.value = '2';
+  } else if (inputRooms.value === '3') {
+    inputCapacity.value = '3';
+
+  } else {
+    inputCapacity.value = '0';
+  }
+}
+
+function changeValidationCapacity() {
+  if (inputRooms.value !== inputCapacity.value) {
+    if (inputRooms.value === '1') {
+      inputCapacity.setCustomValidity('Выберите ' + inputRooms.value + ' гостя');
+    } else if (inputRooms.value === '2' || inputRooms.value === '3') {
+      inputCapacity.setCustomValidity('Выберите ' + inputRooms.value + ' гостей');
+    } else if (inputRooms.value === '100') {
+      inputCapacity.setCustomValidity('Выберите "Не для гостей"');
+    }
+  }
+}
+
+function changeValuePrice() {
+  if (inputType.value === 'bungalo') {
+    addPriceAttribute('0');
+    inputPrice.placeholder = '0';
+  } else if (inputType.value === 'flat') {
+    addPriceAttribute(minValuePriceFlat);
+    inputPrice.placeholder = minValuePriceFlat;
+  } else if (inputType.value === 'house') {
+    addPriceAttribute(minValuePriceHouse);
+    inputPrice.placeholder = minValuePriceHouse;
+  } else {
+    addPriceAttribute(minValuePricePalace);
+    inputPrice.placeholder = minValuePricePalace;
+  }
+}
+
+function changeValueTime() {
+  inputTimeOut.value = inputTimeIn.value;
+}
+
+// Проверка на валидность
+function formValidity() {
+  var successMessageElement = cloneElements('#success', '.success');
+  var errorMessageElement = cloneElements('#error', '.error');
+  var main = document.querySelector('main');
+  var forms = document.querySelectorAll('input[required]');
+  var errorBtn = errorMessageElement.querySelector('.error__button');
+
+  for (var i = 0; i < forms.length; i++) {
+    var form = forms[i];
+    if (!form.value) {
+      console.log('error');
+      main.appendChild(errorMessageElement);
+    } else {
+      main.appendChild(successMessageElement);
+    }
+  }
+
+  errorBtn.addEventListener('click', function () {
+    errorMessageElement.remove();
+  })
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Escape') {
+      errorMessageElement.remove();
+      successMessageElement.remove();
+    }
+  })
+}
+
+inputTimeIn.addEventListener('change', function () {
+  changeValueTime();
+})
+
+mainPin.addEventListener('mousedown', function (evt) {
+  if (typeof evt === 'object') {
+    switch (evt.button) {
+      case 0:
+        activeState();
+        break;
+    }
+  }
+})
+
+mainPin.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    activeState();
+  }
+})
+
+inputType.addEventListener('input', function () {
+  changeValuePrice();
+})
+
+inputRooms.addEventListener('input', function () {
+  changeValueRooms();
+})
+
+inputCapacity.addEventListener('change', function () {
+  changeValidationCapacity();
+})
+
+btnSend.addEventListener('click', function (evt) {
+  evt.preventDefault();
+  formValidity();
+})
+
+btnReset.addEventListener('click', function (evt) {
+  evt.preventDefault();
+  map.classList.add('map--faded');
+  formPage.classList.add('ad-form--disabled');
+  inactiveState();
+  removePins();
+})
+
 
 var Author = function (index) {
   this.avatar = 'img/avatars/user0' + index + '.png';
@@ -108,6 +277,7 @@ function Pin(number) {
   this.location = new PinPosition();
   this.offer = new Offer(this.location);
 }
+
 
 function getRandomValue(array) {
   return array[Math.floor(Math.random() * array.length)];
@@ -181,5 +351,11 @@ function renderPins(pins) {
 }
 
 var PINS = getPins(DATA_COUNT);
-renderPins(PINS);
-mapDialog();
+
+function removePins() {
+  PINS.splice(1, 8);
+  return PINS;
+}
+
+inactiveState();
+defaultValueInput();
