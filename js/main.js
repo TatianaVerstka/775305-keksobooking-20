@@ -89,7 +89,6 @@ var LOCATION_Y_MIN = 130;
 var LOCATION_Y_MAX = 630;
 
 var map = document.querySelector('.map');
-var pin = document.querySelector('.map__pin');
 var mainPin = document.querySelector('.map__pin--main');
 var formPage = document.querySelector('.ad-form');
 var inputFormPage = formPage.querySelectorAll('fieldset');
@@ -197,7 +196,6 @@ function formValidity() {
   for (var i = 0; i < forms.length; i++) {
     var form = forms[i];
     if (!form.value) {
-      console.log('error');
       main.appendChild(errorMessageElement);
     } else {
       main.appendChild(successMessageElement);
@@ -206,19 +204,19 @@ function formValidity() {
 
   errorBtn.addEventListener('click', function () {
     errorMessageElement.remove();
-  })
+  });
 
   document.addEventListener('keydown', function (evt) {
     if (evt.key === 'Escape') {
       errorMessageElement.remove();
       successMessageElement.remove();
     }
-  })
+  });
 }
 
 inputTimeIn.addEventListener('change', function () {
   changeValueTime();
-})
+});
 
 mainPin.addEventListener('mousedown', function (evt) {
   if (typeof evt === 'object') {
@@ -228,30 +226,30 @@ mainPin.addEventListener('mousedown', function (evt) {
         break;
     }
   }
-})
+});
 
 mainPin.addEventListener('keydown', function (evt) {
   if (evt.key === 'Enter') {
     activeState();
   }
-})
+});
 
 inputType.addEventListener('input', function () {
   changeValuePrice();
-})
+});
 
 inputRooms.addEventListener('input', function () {
   changeValueRooms();
-})
+});
 
 inputCapacity.addEventListener('change', function () {
   changeValidationCapacity();
-})
+});
 
 btnSend.addEventListener('click', function (evt) {
   evt.preventDefault();
   formValidity();
-})
+});
 
 btnReset.addEventListener('click', function (evt) {
   evt.preventDefault();
@@ -260,12 +258,11 @@ btnReset.addEventListener('click', function (evt) {
   inactiveState();
   removePins();
   var inputs = document.querySelectorAll('input:not(#address)');
-  var selects = document.querySelectorAll('select');
+  // var selects = document.querySelectorAll('select');
   for (var i = 0; i < inputs.length; i++) {
-    inputs[i].value  = '';
+    inputs[i].value = '';
   }
-})
-
+});
 
 var Author = function (index) {
   this.avatar = 'img/avatars/user0' + index + '.png';
