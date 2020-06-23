@@ -92,7 +92,6 @@ var map = document.querySelector('.map');
 var pin = document.querySelector('.map__pin');
 var mainPin = document.querySelector('.map__pin--main');
 var formPage = document.querySelector('.ad-form');
-var inputFormPage = formPage.querySelectorAll('fieldset');
 var inputType = document.querySelector('#type');
 var inputPrice = document.querySelector('#price');
 var inputRooms = document.querySelector('#room_number');
@@ -117,6 +116,7 @@ function addPriceAttribute(type) {
 }
 
 function inputDisabled(type) {
+  var inputFormPage = formPage.querySelectorAll('fieldset');
   for (var input of inputFormPage) {
     input.disabled = type;
   }
@@ -259,6 +259,11 @@ btnReset.addEventListener('click', function (evt) {
   formPage.classList.add('ad-form--disabled');
   inactiveState();
   removePins();
+  var inputs = document.querySelectorAll('input:not(#address)');
+  var selects = document.querySelectorAll('select');
+  for (var i = 0; i < inputs.length; i++) {
+    inputs[i].value  = '';
+  }
 })
 
 
