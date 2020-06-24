@@ -99,7 +99,6 @@ var inputCapacity = document.querySelector('#capacity');
 var inputAddress = document.querySelector('#address');
 var inputTimeIn = document.querySelector('#timein');
 var inputTimeOut = document.querySelector('#timeout');
-var btnSend = formPage.querySelector('.ad-form__submit');
 var btnReset = document.querySelector('.ad-form__reset');
 
 var minValuePriceFlat = '1000';
