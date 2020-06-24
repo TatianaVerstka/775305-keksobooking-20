@@ -185,35 +185,6 @@ function changeValueTime() {
   inputTimeOut.value = inputTimeIn.value;
 }
 
-// Проверка на валидность
-function formValidity() {
-  var successMessageElement = cloneElements('#success', '.success');
-  var errorMessageElement = cloneElements('#error', '.error');
-  var main = document.querySelector('main');
-  var forms = document.querySelectorAll('input[required]');
-  var errorBtn = errorMessageElement.querySelector('.error__button');
-
-  for (var i = 0; i < forms.length; i++) {
-    var form = forms[i];
-    if (!form.value) {
-      main.appendChild(errorMessageElement);
-    } else {
-      main.appendChild(successMessageElement);
-    }
-  }
-
-  errorBtn.addEventListener('click', function () {
-    errorMessageElement.remove();
-  });
-
-  document.addEventListener('keydown', function (evt) {
-    if (evt.key === 'Escape') {
-      errorMessageElement.remove();
-      successMessageElement.remove();
-    }
-  });
-}
-
 inputTimeIn.addEventListener('change', function () {
   changeValueTime();
 });
@@ -246,19 +217,13 @@ inputCapacity.addEventListener('change', function () {
   changeValidationCapacity();
 });
 
-btnSend.addEventListener('click', function (evt) {
-  evt.preventDefault();
-  formValidity();
-});
-
 btnReset.addEventListener('click', function (evt) {
   evt.preventDefault();
   map.classList.add('map--faded');
   formPage.classList.add('ad-form--disabled');
   inactiveState();
-  removePins();
+  removeMapPins();
   var inputs = document.querySelectorAll('input:not(#address)');
-  // var selects = document.querySelectorAll('select');
   for (var i = 0; i < inputs.length; i++) {
     inputs[i].value = '';
   }
@@ -279,7 +244,6 @@ function Pin(number) {
   this.location = new PinPosition();
   this.offer = new Offer(this.location);
 }
-
 
 function getRandomValue(array) {
   return array[Math.floor(Math.random() * array.length)];
@@ -342,7 +306,6 @@ function renderPin(props) {
   return pinElement;
 }
 
-
 function renderPins(pins) {
   var mapPinsElement = document.querySelector('.map__pins');
   var docFragment = document.createDocumentFragment();
@@ -354,10 +317,14 @@ function renderPins(pins) {
 
 var PINS = getPins(DATA_COUNT);
 
-function removePins() {
-  PINS.splice(1, 8);
-  return PINS;
-}
+var removeMapPins = function () {
+  var elsPins = document.querySelectorAll('.map__pin');
+  elsPins.forEach(function (elPin) {
+    if (!elPin.classList.contains('map__pin--main')) {
+      elPin.remove();
+    }
+  });
+};
 
 inactiveState();
 defaultValueInput();
