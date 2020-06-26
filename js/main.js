@@ -94,16 +94,34 @@ var formPage = document.querySelector('.ad-form');
 var inputFormPage = formPage.querySelectorAll('fieldset');
 var inputType = document.querySelector('#type');
 var inputPrice = document.querySelector('#price');
-var inputRooms = document.querySelector('#room_number');
-var inputCapacity = document.querySelector('#capacity');
 var inputAddress = document.querySelector('#address');
 var inputTimeIn = document.querySelector('#timein');
 var inputTimeOut = document.querySelector('#timeout');
 var btnReset = document.querySelector('.ad-form__reset');
+var submitBtn = formPage.querySelector('.ad-form__submit');
 
 var minValuePriceFlat = '1000';
 var minValuePriceHouse = '5000';
 var minValuePricePalace = '10000';
+
+var roomsCapacityMap = {
+  '1': {
+    'guests': ['1'],
+    'errorText': '1 комната для 1 гостя'
+  },
+  '2': {
+    'guests': ['1', '2'],
+    'errorText': '2 комнаты для 1 или 2 гостей'
+  },
+  '3': {
+    'guests': ['1', '2', '3'],
+    'errorText': '3 комнаты для 1, 2 или 3 гостей'
+  },
+  '100': {
+    'guests': ['0'],
+    'errorText': '100 комнат не для гостей'
+  },
+};
 
 function defaultValueInput() {
   inputPrice.placeholder = minValuePriceFlat;
@@ -139,26 +157,16 @@ function activeState() {
   }
 }
 
-function changeValueRooms() {
-  if (inputRooms.value === '1') {
-    inputCapacity.value = '1';
-  } else if (inputRooms.value === '2') {
-    inputCapacity.value = '2';
-  } else if (inputRooms.value === '3') {
-    inputCapacity.value = '3';
-
-  } else {
-    inputCapacity.value = '0';
-  }
-}
-
 function changeValidationCapacity() {
-  if (inputRooms.value !== inputCapacity.value) {
+  if (inputRooms.value != inputCapacity.value) {
     if (inputRooms.value === '1') {
+      console.log(inputCapacity.value);
       inputCapacity.setCustomValidity('Выберите ' + inputRooms.value + ' гостя');
     } else if (inputRooms.value === '2' || inputRooms.value === '3') {
+      console.log(inputCapacity.value);
       inputCapacity.setCustomValidity('Выберите ' + inputRooms.value + ' гостей');
     } else if (inputRooms.value === '100') {
+      console.log(inputCapacity.value);
       inputCapacity.setCustomValidity('Выберите "Не для гостей"');
     }
   }
@@ -182,6 +190,17 @@ function changeValuePrice() {
 
 function changeValueTime() {
   inputTimeOut.value = inputTimeIn.value;
+}
+
+function validateRoomsNumbers() {
+  var roomsSelect = document.querySelector('[name="rooms"]');
+  var rooms = roomsSelect.value;
+  var guests = document.querySelector('[name="capacity"]').value;
+  roomsSelect.setCustomValidity(roomsCapacityMap[rooms].guests.includes(guests) ? '' : roomsCapacityMap[rooms].errorText);
+}
+
+function onSubmitButtonClick() {
+  validateRoomsNumbers();
 }
 
 inputTimeIn.addEventListener('change', function () {
@@ -208,14 +227,6 @@ inputType.addEventListener('input', function () {
   changeValuePrice();
 });
 
-inputRooms.addEventListener('input', function () {
-  changeValueRooms();
-});
-
-inputCapacity.addEventListener('change', function () {
-  changeValidationCapacity();
-});
-
 btnReset.addEventListener('click', function (evt) {
   evt.preventDefault();
   map.classList.add('map--faded');
@@ -227,6 +238,8 @@ btnReset.addEventListener('click', function (evt) {
     inputs[i].value = '';
   }
 });
+
+submitBtn.addEventListener('click', onSubmitButtonClick);
 
 var Author = function (index) {
   this.avatar = 'img/avatars/user0' + index + '.png';
