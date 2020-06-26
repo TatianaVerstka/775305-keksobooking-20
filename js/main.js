@@ -125,7 +125,6 @@ var roomsCapacityMap = {
 
 function defaultValueInput() {
   inputPrice.placeholder = minValuePriceFlat;
-  inputCapacity.value = '1';
 }
 
 function addPriceAttribute(type) {
@@ -154,21 +153,6 @@ function activeState() {
     inputAddress.value = Math.round(parseFloat(mainPin.style.left) + (65 / 2)) + ', ' + Math.round((parseFloat(mainPin.style.top) + (65 / 2 + 22)));
   } else {
     inputAddress.value = Math.round(parseFloat(mainPin.style.left) + (50 / 2)) + ', ' + Math.round((parseFloat(mainPin.style.top) + 70));
-  }
-}
-
-function changeValidationCapacity() {
-  if (inputRooms.value != inputCapacity.value) {
-    if (inputRooms.value === '1') {
-      console.log(inputCapacity.value);
-      inputCapacity.setCustomValidity('Выберите ' + inputRooms.value + ' гостя');
-    } else if (inputRooms.value === '2' || inputRooms.value === '3') {
-      console.log(inputCapacity.value);
-      inputCapacity.setCustomValidity('Выберите ' + inputRooms.value + ' гостей');
-    } else if (inputRooms.value === '100') {
-      console.log(inputCapacity.value);
-      inputCapacity.setCustomValidity('Выберите "Не для гостей"');
-    }
   }
 }
 
