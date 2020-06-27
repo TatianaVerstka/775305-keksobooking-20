@@ -23,30 +23,30 @@
     }
   };
 
-  function shuffleArray (array) {
+  function shuffleArray(array) {
     var newArray = array.slice();
     for (var i = newArray.length - 1; i > 0; i--) {
-      var j = getRandomValue(i);
+      var j = window.getRandomValue(i);
       var temp = newArray[i];
       newArray[i] = newArray[j];
       newArray[j] = temp;
     }
     return newArray;
-  };
+  }
 
   window.getRandomNumberInRange = function (min, max) {
     return Math.floor(Math.random() * (max - min) + min);
-  }
+  };
 
   window.cloneElements = function (templateSelector, elementSelector) {
     return document.querySelector(templateSelector).content.querySelector(elementSelector).cloneNode(true);
-  }
+  };
 
   window.getRandomValue = function (array) {
     return array[Math.floor(Math.random() * array.length)];
-  }
+  };
 
   window.getArrayWithRandomLength = function (array) {
     return shuffleArray(array).slice(0, window.getRandomValue(array.length));
-  }
+  };
 })();

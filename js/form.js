@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var map = document.querySelector('.map');
   var inputPrice = document.querySelector('#price');
   var inputTimeIn = document.querySelector('#timein');
   var inputTimeOut = document.querySelector('#timeout');
@@ -67,9 +68,9 @@
     validateRoomsNumbers();
   }
 
-  window.defaultValueInput = function() {
+  window.defaultValueInput = function () {
     inputPrice.placeholder = minValuePriceFlat;
-  }
+  };
 
   inputTimeIn.addEventListener('change', function () {
     changeValueTime();
@@ -90,6 +91,6 @@
     var inputs = document.querySelectorAll('input:not(#address)');
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].value = '';
-    }
+    };
   });
 })()
