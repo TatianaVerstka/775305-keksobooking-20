@@ -91,6 +91,6 @@
     var inputs = document.querySelectorAll('input:not(#address)');
     for (var i = 0; i < inputs.length; i++) {
       inputs[i].value = '';
-    };
+    }
   });
-})()
+})();

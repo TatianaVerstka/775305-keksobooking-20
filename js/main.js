@@ -48,5 +48,4 @@
   var PINS = window.getPins(DATA_COUNT);
 
   window.inactiveState();
-})()
-
+})();
