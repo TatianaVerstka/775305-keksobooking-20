@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var DATA_COUNT = 8;
   var mainPin = document.querySelector('.map__pin--main');
   var map = document.querySelector('.map');
   var formPage = document.querySelector('.ad-form');
@@ -23,7 +22,7 @@
     formPage.classList.remove('ad-form--disabled');
     inputDisabled(false);
 
-    window.renderPins(PINS);
+    window.renderPins();
     window.getAdressWithPin();
   };
 
@@ -44,8 +43,6 @@
       window.activeState();
     }
   });
-
-  var PINS = window.getPins(DATA_COUNT);
 
   window.inactiveState();
 })();
