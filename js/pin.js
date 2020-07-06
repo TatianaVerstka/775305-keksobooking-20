@@ -1,26 +1,13 @@
 'use strict';
 
 (function () {
-  function renderPin(props) {
-    var pinElement = window.cloneElements('#pin', '.map__pin');
-    pinElement.querySelector('img').src = '';
-    pinElement.style.left = (props.location.x - pinElement.clientWidth / 2) + 'px';
-    pinElement.style.top = (props.location.y - pinElement.clientHeight) + 'px';
-    pinElement.querySelector('img').src = props.author.avatar;
-    pinElement.querySelector('img').alt = props.offer.title;
-    return pinElement;
+  var response = [];
+
+  function onSuccess(data) {
+    response = data;
+    window.render(response);
   }
-
-  function onSuccess(response) {
-    var mapPinsElement = document.querySelector('.map__pins');
-    var docFragment = document.createDocumentFragment();
-
-    for (var i = 0; i < response.length; i++) {
-      docFragment.appendChild(renderPin(response[i]));
-    }
-    mapPinsElement.appendChild(docFragment);
-  }
-
+  console.log(response);
   function onError(errorMessage) {
     var node = document.createElement('div');
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
