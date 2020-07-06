@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  function renderPopup (el) {
+  function renderPopup(el) {
     var popupElement = window.cloneElements('#card', '.popup');
     popupElement.querySelector('.popup__title').textContent = el.offer.title;
     popupElement.querySelector('.popup__text--address').textContent = el.offer.address;
@@ -25,5 +25,5 @@
     }
     var filterContainer = document.querySelector('.map__filters-container');
     mapPopupElement.insertBefore(popupFragment, filterContainer);
-  }
+  };
 })();
