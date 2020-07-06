@@ -7,7 +7,7 @@
     response = data;
     window.render(response);
   }
-  console.log(response);
+
   function onError(errorMessage) {
     var node = document.createElement('div');
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';

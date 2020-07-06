@@ -4,14 +4,14 @@
   var selectHousingType = document.querySelector('#housing-type');
 
   var typePin = {
-    onTypeChange: function (type) {}
-  }
+    onTypeChange: function () {}
+  };
 
-  selectHousingType.addEventListener('change', function() {
+  selectHousingType.addEventListener('change', function () {
     var newType = selectHousingType.value;
     typePin.onTypeChange(newType);
   });
 
-  window.type = type;
-  return window.type;
+  window.typePin = typePin;
+  return window.typePin;
 })();
