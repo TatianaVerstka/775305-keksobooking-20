@@ -4,7 +4,7 @@
   function renderPopup(el) {
     var popupElement = window.cloneElements('#card', '.popup');
     var offerType = el.offer.type;
-    var newType = ''
+    var newType = '';
 
     if (offerType === 'flat') {
       newType = 'Квaртира';
