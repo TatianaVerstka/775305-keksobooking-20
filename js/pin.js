@@ -14,7 +14,7 @@
       filter(function (value) {
         return value.offer.type === valueHousingType;
       }));
-    })
+    });
   }
 
   function onSuccess(data) {
