@@ -3,9 +3,24 @@
 (function () {
   var response = [];
 
+  function filterPins(data) {
+    var selectHousingType = document.getElementById('housing-type');
+    window.render(data);
+    selectHousingType.addEventListener('input', function () {
+
+      var valueHousingType = selectHousingType.value;
+
+      window.render(data.slice().
+      filter(function (value) {
+        return value.offer.type === valueHousingType;
+      }));
+    })
+  }
+
   function onSuccess(data) {
     response = data;
-    window.render(response);
+    filterPins(response);
+    window.popup(response);
   }
 
   function onError(errorMessage) {
