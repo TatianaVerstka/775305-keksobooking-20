@@ -6,6 +6,7 @@
   function onSuccess(data) {
     response = data;
     window.render(response);
+    window.popup(response);
   }
 
   function onError(errorMessage) {
