@@ -16,20 +16,20 @@
       newType = 'Дворец';
     }
 
-    var photos = popupElement.querySelector('.popup__photos');
-    var photo = popupElement.querySelector('.popup__photo');
-    photo.remove();
 
-    for (var i = 0; i < el.offer.photos.length; i++) {
-      var heightImg = 40 + 'px';
-      var widhtImg = 45 + 'px';
-      var img = document.createElement('img');
-      img.classList.add('popup__photo');
-      img.style.height = heightImg;
-      img.style.width = widhtImg;
-      img.src = el.offer.photos[i];
-      photos.appendChild(img);
+    function renderPhoto() {
+      var photos = popupElement.querySelector('.popup__photos');
+      var photo = popupElement.querySelector('.popup__photo');
+      photo.src = el.offer.photos[0];
+
+      for (var i = 1; i < el.offer.photos.length; i++) {
+        var photoClone = popupElement.querySelector('.popup__photo').cloneNode();
+        photoClone.src = el.offer.photos[i];
+        photos.appendChild(photoClone);
+      }
     }
+
+    renderPhoto();
 
     popupElement.querySelector('.popup__title').textContent = el.offer.title;
     popupElement.querySelector('.popup__text--address').textContent = el.offer.address;
