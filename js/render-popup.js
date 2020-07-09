@@ -16,10 +16,19 @@
       newType = 'Дворец';
     }
 
+    var photos = popupElement.querySelector('.popup__photos');
     var photo = popupElement.querySelector('.popup__photo');
+    photo.remove();
 
     for (var i = 0; i < el.offer.photos.length; i++) {
-      photo.src = el.offer.photos[i];
+      var heightImg = 40 + 'px';
+      var widhtImg = 45 + 'px';
+      var img = document.createElement('img');
+      img.classList.add('popup__photo');
+      img.style.height = heightImg;
+      img.style.width = widhtImg;
+      img.src = el.offer.photos[i];
+      photos.appendChild(img);
     }
 
     popupElement.querySelector('.popup__title').textContent = el.offer.title;
