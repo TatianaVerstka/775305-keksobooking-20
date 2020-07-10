@@ -1,24 +1,12 @@
 'use strict';
 
 (function () {
-  function renderPin(props) {
-    var pinElement = window.cloneElements('#pin', '.map__pin');
-    pinElement.querySelector('img').src = '';
-    pinElement.style.left = (props.location.x - pinElement.clientWidth / 2) + 'px';
-    pinElement.style.top = (props.location.y - pinElement.clientHeight) + 'px';
-    pinElement.querySelector('img').src = props.author.avatar;
-    pinElement.querySelector('img').alt = props.offer.title;
-    return pinElement;
-  }
+  var response = [];
 
-  function onSuccess(response) {
-    var mapPinsElement = document.querySelector('.map__pins');
-    var docFragment = document.createDocumentFragment();
-
-    for (var i = 0; i < response.length; i++) {
-      docFragment.appendChild(renderPin(response[i]));
-    }
-    mapPinsElement.appendChild(docFragment);
+  function onSuccess(data) {
+    response = data;
+    window.render(response);
+    window.popup(response);
   }
 
   function onError(errorMessage) {
