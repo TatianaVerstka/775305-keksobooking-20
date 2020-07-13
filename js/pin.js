@@ -20,6 +20,7 @@
   function onSuccess(data) {
     response = data;
     filterPins(response);
+    window.render(response);
     window.popup(response);
   }
 
