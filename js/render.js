@@ -15,7 +15,6 @@
 
   var docFragment = document.createDocumentFragment();
   window.render = function (data) {
-    console.log(data);
     var takeNumber = data.length > PIN_COUNT ? PIN_COUNT : data.length;
     var mapPinsElement = document.querySelector('.map__pins');
     var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
