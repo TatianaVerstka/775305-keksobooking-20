@@ -7,20 +7,22 @@
     var selectHousingType = document.getElementById('housing-type');
     window.render(data);
     selectHousingType.addEventListener('input', function () {
-
       var valueHousingType = selectHousingType.value;
 
-      window.render(data.slice().
-      filter(function (value) {
-        return value.offer.type === valueHousingType;
-      }));
+      if (valueHousingType !== 'any') {
+        window.render(data.slice().
+        filter(function (value) {
+          return value.offer.type === valueHousingType;
+        }));
+      } else {
+        window.render(data);
+      }
     });
   }
 
   function onSuccess(data) {
     response = data;
     filterPins(response);
-    window.render(response);
     window.popup(response);
   }
 
